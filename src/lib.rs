@@ -50,6 +50,7 @@
     missing_debug_implementations,
     missing_docs
 )]
+#[deny(clippy::drop_copy)]
 #![allow(
     warnings,
     missing_docs,
