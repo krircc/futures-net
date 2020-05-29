@@ -50,7 +50,6 @@
     missing_debug_implementations,
     missing_docs
 )]
-#[deny(clippy::drop_copy)]
 #![allow(
     warnings,
     missing_docs,
@@ -61,6 +60,7 @@
     clippy::too_many_arguments,
     clippy::new_without_default
 )]
+#[deny(clippy::drop_copy)]
 
 #[cfg(feature = "macro")]
 #[doc(inline)]
