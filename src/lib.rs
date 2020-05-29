@@ -65,12 +65,11 @@
 #[doc(inline)]
 pub use futures_net_macro::{main, test};
 
+pub mod driver;
 pub mod runtime;
 pub mod tcp;
 pub mod udp;
 pub mod uds;
-
-pub mod driver;
 
 #[doc(inline)]
 pub use crate::tcp::{TcpListener, TcpStream};

@@ -12,9 +12,9 @@ use std::ops::{Deref, DerefMut};
 use std::sync::Mutex;
 use std::thread::{self, ThreadId};
 
-use crossbeam_utils::CachePadded;
 use num_cpus;
 use parking_lot;
+use cache_padded::CachePadded;
 
 /// A scalable read-writer lock.
 ///
