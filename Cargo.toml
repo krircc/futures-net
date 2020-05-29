@@ -1,0 +1,52 @@
+[package]
+name = "futures-net"
+version = "0.5.0"
+authors = ["krircc <krircc@qq.com>"]
+documentation = "https://docs.rs/futures-net/"
+repository = "https://github.com/krircc/futures-net"
+description = "The futures-net library"
+categories = ["asynchronous", "network-programming"]
+keywords = ["async", "net", "tcp", "udp", "futures"]
+license = "MIT"
+readme = "README.md"
+edition = "2018"
+
+members = [
+  ".",
+  "futures-net-macro",
+]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+default = ["macro"]
+macro = ["futures-net-macro"]
+
+[dependencies]
+futures-net-macro = { version = "1.0.0", optional = true}
+futures-core = {version = "0.3", default-features = false }
+futures-util = {version = "0.3", default-features = false, features = ["std"]}
+futures-executor = "0.3"
+futures-io = "0.3"
+anyhow = "1.0"
+async-datagram = "3.0.0"
+async-ready = "3.0.0"
+iovec = "0.1.4"
+lazy_static = "1.4.0"
+libc = "0.2.71"
+log = "0.4.8"
+net2 = "0.2"
+num_cpus = "1.13.0"
+parking_lot = "0.10"
+slab = "0.4.2"
+crossbeam-utils = "0.7.2"
+
+[dev-dependencies]
+bytes = "0.4.11"
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1

@@ -1,0 +1,19 @@
+[package]
+name = "futures-net-macro"
+version = "1.0.0"
+authors = ["krircc <krircc@qq.com>"]
+documentation = "https://docs.rs/futures-net-macro"
+repository = "https://github.com/krircc/futures-net-macro"
+description = "The futures-net library"
+categories = ["asynchronous", "network-programming"]
+keywords = ["async", "net", "futures"]
+license = "MIT"
+readme = "README.md"
+edition = "2018"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = "1"
+syn = { version = "1", features = ["full"] }
