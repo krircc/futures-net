@@ -229,7 +229,7 @@ impl TakeError for UnixStream {
     ///
     /// ```rust,no_run
     /// use futures_net::UnixStream;
-    /// use futures_net::driver::TakeError;
+    /// use async_ready::TakeError;
     ///
     /// # async fn run() -> std::io::Result<()> {
     /// let stream = UnixStream::connect("/tmp/sock").await?;

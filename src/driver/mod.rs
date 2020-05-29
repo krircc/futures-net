@@ -1,6 +1,6 @@
 //! futures reactor,  event loop.
 
-pub(crate) mod sys;
+pub mod sys;
 pub(crate) mod background;
 pub(crate) mod registration;
 mod poll_evented;

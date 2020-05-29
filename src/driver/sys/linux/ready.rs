@@ -96,14 +96,12 @@ pub struct UnixReady(Ready);
 const ERROR: usize = 0b00_0100;
 const HUP: usize = 0b00_1000;
 
-const AIO: usize = 0b00_0000;
-
 const LIO: usize = 0b00_0000;
 
 const PRI: usize = 0b100_0000;
 
 // Export to support `Ready::all`
-pub const READY_ALL: usize = ERROR | HUP | AIO | LIO | PRI;
+pub const READY_ALL: usize = ERROR | HUP  | LIO | PRI;
 
 #[test]
 fn test_ready_all() {
@@ -112,33 +110,13 @@ fn test_ready_all() {
 
     assert_eq!(
         READY_ALL | readable | writable,
-        ERROR + HUP + AIO + LIO + PRI + readable + writable
+        ERROR + HUP + LIO + PRI + readable + writable
     );
 
     assert!(!Ready::from(UnixReady::priority()).is_writable());
 }
 
 impl UnixReady {
-    /// Returns a `Ready` representing AIO completion readiness
-    ///
-    /// See [`Poll`] for more documentation on polling.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use futures_net::driver::sys::UnixReady;
-    ///
-    /// let ready = UnixReady::aio();
-    ///
-    /// assert!(ready.is_aio());
-    /// ```
-    ///
-    /// [`Poll`]: ../struct.Poll.html
-
-    #[doc(hidden)]
-    pub fn aio() -> UnixReady {
-        UnixReady(Ready::empty())
-    }
 
     /// Returns a `Ready` representing error readiness.
     ///
@@ -213,26 +191,6 @@ impl UnixReady {
     /// [`Poll`]: struct.Poll.html
     pub fn priority() -> UnixReady {
         UnixReady(ready_from_usize(PRI))
-    }
-
-    /// Returns true if `Ready` contains AIO readiness
-    ///
-    /// See [`Poll`] for more documentation on polling.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use futures_net::driver::sys::UnixReady;
-    ///
-    /// let ready = UnixReady::aio();
-    ///
-    /// assert!(ready.is_aio());
-    /// ```
-    ///
-    /// [`Poll`]: ../struct.Poll.html
-    #[doc(hidden)]
-    pub fn is_aio(&self) -> bool {
-        false
     }
 
     /// Returns true if the value includes error readiness
@@ -391,8 +349,6 @@ impl fmt::Debug for UnixReady {
             (UnixReady(Ready::writable()), "Writable"),
             (UnixReady::error(), "Error"),
             (UnixReady::hup(), "Hup"),
-            #[allow(deprecated)]
-            (UnixReady::aio(), "Aio"),
             (UnixReady::priority(), "Priority"),
         ];
 

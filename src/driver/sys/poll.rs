@@ -88,7 +88,7 @@ use std::{isize, mem, ops};
 /// # use std::error::Error;
 /// # fn try_main() -> Result<(), Box<Error>> {
 /// use futures_net::driver::sys::{Poll, Token};
-/// use futures_net::driver::sys::event::{Events, Events, Ready, PollOpt};
+/// use futures_net::driver::sys::event::{Events, Ready, PollOpt};
 /// use futures_net::driver::sys::net::TcpStream;
 ///
 /// use std::net::{TcpListener, SocketAddr};
@@ -370,7 +370,7 @@ pub struct Poll {
 /// # Examples
 ///
 /// ```
-/// use futures_net::driver::sys::::{Registration, Poll, Token};
+/// use futures_net::driver::sys::{Registration, Poll, Token};
 /// use futures_net::driver::sys::event::{Evented, Ready, PollOpt};
 ///
 /// use std::io;

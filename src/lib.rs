@@ -5,15 +5,16 @@
 //!
 //! # Examples
 //! __TCP Server__
-//! ```rust
-//! use futures_net::{TcpListener, TcpStream};
+//! ```rust,no_run
+//! use futures_net::{TcpListener, TcpStream, runtime::Runtime};
 //! use futures::prelude::*;
 //!
 //! async fn say_hello(mut stream: TcpStream) {
 //!     stream.write_all(b"Shall I hear more, or shall I speak at this?").await;
 //! }
 //!
-//! async fn listen() -> Result<(), Box<dyn std::error::Error + 'static>> {
+//! #[futures_net::main]
+//! async fn main() -> Result<(), Box<dyn std::error::Error + 'static>> {
 //!     let socket_addr = "127.0.0.1:8080".parse()?;
 //!     let mut listener = TcpListener::bind(&socket_addr)?;
 //!     let mut incoming = listener.incoming();
@@ -29,9 +30,10 @@
 //! ```rust,no_run
 //! use std::error::Error;
 //! use futures::prelude::*;
-//! use futures_net::{TcpListener, TcpStream};
+//! use futures_net::{TcpListener, TcpStream, runtime::Runtime};
 //!
-//! async fn receive_sonnet() -> Result<(), Box<dyn Error + 'static>> {
+//! #[futures_net::main]
+//! async fn main() -> Result<(), Box<dyn Error + 'static>> {
 //!     let socket_addr = "127.0.0.1:8080".parse()?;
 //!     let mut buffer = vec![];
 //!     let mut stream = TcpStream::connect(&socket_addr).await?;
@@ -41,6 +43,7 @@
 //!     Ok(())
 //! }
 //! ```
+
 
 #![warn(
     rust_2018_idioms,
@@ -65,10 +68,10 @@ pub use futures_net_macro::{main, test};
 
 pub mod runtime;
 pub mod uds;
-mod tcp;
-mod udp;
+pub mod tcp;
+pub mod udp;
 
-pub(crate) mod driver;
+pub mod driver;
 
 #[doc(inline)]
 pub use crate::tcp::{TcpListener, TcpStream};

@@ -1,7 +1,7 @@
 #![allow(missing_docsbare_trait_objects, deprecated, unknown_lints)]
 #![deny(missing_debug_implementations)]
 
-//! Linux systrem api.
+//! Linux systrem-io api.
 //!
 //! # Features
 //!

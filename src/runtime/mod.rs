@@ -1,5 +1,19 @@
 //! Futures Async Execute Engine
 
+//! # Examples
+//! ```rust
+//! use futures_net::runtime::Runtime;
+//!
+//! #[futures_net::main]
+//! async fn main() {
+//!        say_hello().await;
+//! }
+//! async fn say_hello() {
+//!     println!("Hello, futures_net!");
+//! }
+//!
+//! ```
+
 use futures_core::future::{BoxFuture, Future, LocalBoxFuture};
 use futures_executor::{LocalPool, LocalSpawner};
 use futures_util::task::{LocalSpawn as _, Spawn as _};

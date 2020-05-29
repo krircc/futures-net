@@ -45,6 +45,10 @@ crossbeam-utils = "0.7.2"
 
 [dev-dependencies]
 bytes = "0.4.11"
+futures = {version = "0.3", features = ["thread-pool"]}
+env_logger = {version = "0.6.0", default-features = false}
+rand = "0.7.0"
+tempdir = "0.3.7"
 
 [profile.release]
 lto = true

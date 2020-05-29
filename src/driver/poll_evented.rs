@@ -16,8 +16,7 @@ use std::sync::atomic::AtomicUsize;
 use std::sync::atomic::Ordering::Relaxed;
 use std::task::{Context, Poll};
 
-/// Associates an I/O resource that implements the [`std::io::Read`] and/or
-/// [`std::io::Write`] traits with the reactor that drives it.
+/// Associates an I/O resource that implements the AsyncRead/AsyncWrite traits with the reactor that drives it.
 ///
 /// `PollEvented` uses [`Registration`] internally to take a type that
 /// implements [`sys::Evented`] as well as [`std::io::Read`] and or

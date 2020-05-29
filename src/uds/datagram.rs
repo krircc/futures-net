@@ -305,7 +305,7 @@ impl TakeError for UnixDatagram {
     /// # Examples
     ///
     /// ```rust,no_run
-    /// use futures_net::driver::TakeError;
+    /// use async_ready::TakeError;
     /// use futures_net::uds::UnixDatagram;
     ///
     /// # fn run() -> std::io::Result<()> {
