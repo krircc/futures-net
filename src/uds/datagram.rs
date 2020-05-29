@@ -198,7 +198,11 @@ impl UnixDatagram {
     /// # Ok(())
     /// # }
     /// ```
-    pub fn send_to<'a, 'b>(&'a mut self, buf: &'b [u8], target: &'b PathBuf) -> SendTo<'a, 'b> {
+    pub fn send_to<'a, 'b>(
+        &'a mut self,
+        buf: &'b [u8],
+        target: &'b PathBuf,
+    ) -> SendTo<'a, 'b> {
         SendTo {
             buf,
             target,

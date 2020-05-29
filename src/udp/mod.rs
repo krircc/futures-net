@@ -104,7 +104,11 @@ impl UdpSocket {
     /// # Ok(())
     /// # }
     /// ```
-    pub fn send_to<'a, 'b>(&'a mut self, buf: &'b [u8], target: &'b SocketAddr) -> SendTo<'a, 'b> {
+    pub fn send_to<'a, 'b>(
+        &'a mut self,
+        buf: &'b [u8],
+        target: &'b SocketAddr,
+    ) -> SendTo<'a, 'b> {
         SendTo {
             buf,
             target,
@@ -253,7 +257,11 @@ impl UdpSocket {
     /// socket.join_multicast_v4(&mdns_addr, &interface)?;
     /// # Ok(()) }
     /// ```
-    pub fn join_multicast_v4(&self, multiaddr: &Ipv4Addr, interface: &Ipv4Addr) -> io::Result<()> {
+    pub fn join_multicast_v4(
+        &self,
+        multiaddr: &Ipv4Addr,
+        interface: &Ipv4Addr,
+    ) -> io::Result<()> {
         self.io.get_ref().join_multicast_v4(multiaddr, interface)
     }
 
@@ -276,7 +284,11 @@ impl UdpSocket {
     /// socket.join_multicast_v6(&mdns_addr, 0)?;
     /// # Ok(()) }
     /// ```
-    pub fn join_multicast_v6(&self, multiaddr: &Ipv6Addr, interface: u32) -> io::Result<()> {
+    pub fn join_multicast_v6(
+        &self,
+        multiaddr: &Ipv6Addr,
+        interface: u32,
+    ) -> io::Result<()> {
         self.io.get_ref().join_multicast_v6(multiaddr, interface)
     }
 
@@ -285,7 +297,11 @@ impl UdpSocket {
     /// For more information about this option, see [`join_multicast_v4`].
     ///
     /// [`join_multicast_v4`]: #method.join_multicast_v4
-    pub fn leave_multicast_v4(&self, multiaddr: &Ipv4Addr, interface: &Ipv4Addr) -> io::Result<()> {
+    pub fn leave_multicast_v4(
+        &self,
+        multiaddr: &Ipv4Addr,
+        interface: &Ipv4Addr,
+    ) -> io::Result<()> {
         self.io.get_ref().leave_multicast_v4(multiaddr, interface)
     }
 
@@ -294,7 +310,11 @@ impl UdpSocket {
     /// For more information about this option, see [`join_multicast_v6`].
     ///
     /// [`join_multicast_v6`]: #method.join_multicast_v6
-    pub fn leave_multicast_v6(&self, multiaddr: &Ipv6Addr, interface: u32) -> io::Result<()> {
+    pub fn leave_multicast_v6(
+        &self,
+        multiaddr: &Ipv6Addr,
+        interface: u32,
+    ) -> io::Result<()> {
         self.io.get_ref().leave_multicast_v6(multiaddr, interface)
     }
 }
@@ -424,11 +444,10 @@ impl<'a, 'b> Future for RecvFrom<'a, 'b> {
     }
 }
 
-
 use std::os::unix::prelude::*;
 
 impl AsRawFd for UdpSocket {
-        fn as_raw_fd(&self) -> RawFd {
-            self.io.get_ref().as_raw_fd()
-        }
+    fn as_raw_fd(&self) -> RawFd {
+        self.io.get_ref().as_raw_fd()
+    }
 }

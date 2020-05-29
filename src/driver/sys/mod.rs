@@ -26,10 +26,10 @@
 pub mod event;
 pub mod net;
 
-mod poll;
 mod linux;
+mod poll;
 mod token;
 
-pub use self::poll::{Poll, Registration, SetReadiness};
 pub use self::linux::UnixReady;
+pub use self::poll::{Poll, Registration, SetReadiness};
 pub use self::token::Token;

@@ -1028,7 +1028,11 @@ impl Poll {
     /// ```
     ///
     /// [struct]: #
-    pub fn poll(&self, events: &mut Events, timeout: Option<Duration>) -> io::Result<usize> {
+    pub fn poll(
+        &self,
+        events: &mut Events,
+        timeout: Option<Duration>,
+    ) -> io::Result<usize> {
         self.poll1(events, timeout, false)
     }
 
@@ -1217,7 +1221,9 @@ impl Poll {
                     break;
                 }
                 Ok(false) => break,
-                Err(ref e) if e.kind() == io::ErrorKind::Interrupted && !interruptible => {
+                Err(ref e)
+                    if e.kind() == io::ErrorKind::Interrupted && !interruptible =>
+                {
                     // Interrupted by a signal; update timeout if necessary and retry
                     if let Some(to) = timeout {
                         let elapsed = now.elapsed();
@@ -1676,7 +1682,8 @@ impl Registration {
 
         // Allocate the registration node. The new node will have `ref_count`
         // set to 3: one SetReadiness, one Registration, and one Poll handle.
-        let node = Box::into_raw(Box::new(ReadinessNode::new(queue, token, interest, opt, 3)));
+        let node =
+            Box::into_raw(Box::new(ReadinessNode::new(queue, token, interest, opt, 3)));
 
         let registration = Registration {
             inner: RegistrationInner { node },
@@ -1923,7 +1930,13 @@ impl RegistrationInner {
     }
 
     /// Update the registration details associated with the node
-    fn update(&self, poll: &Poll, token: Token, interest: Ready, opt: PollOpt) -> io::Result<()> {
+    fn update(
+        &self,
+        poll: &Poll,
+        token: Token,
+        interest: Ready,
+        opt: PollOpt,
+    ) -> io::Result<()> {
         // First, ensure poll instances match
         //
         // Load the queue pointer, `Relaxed` is sufficient here as only the
@@ -1934,7 +1947,9 @@ impl RegistrationInner {
             unsafe { &*(&poll.readiness_queue.inner as *const _ as *const *mut ()) };
         let other = *other;
 
-        debug_assert!(mem::size_of::<Arc<ReadinessQueueInner>>() == mem::size_of::<*mut ()>());
+        debug_assert!(
+            mem::size_of::<Arc<ReadinessQueueInner>>() == mem::size_of::<*mut ()>()
+        );
 
         if queue.is_null() {
             // Attempt to set the queue pointer. `Release` ordering synchronizes
@@ -2307,10 +2322,10 @@ impl ReadinessQueue {
             .next_readiness
             .store(ptr::null_mut(), Relaxed);
 
-        let actual = self
-            .inner
-            .head_readiness
-            .compare_and_swap(end_marker, sleep_marker, AcqRel);
+        let actual =
+            self.inner
+                .head_readiness
+                .compare_and_swap(end_marker, sleep_marker, AcqRel);
 
         debug_assert!(actual != sleep_marker);
 
@@ -2439,9 +2454,9 @@ impl ReadinessQueueInner {
                 .next_readiness
                 .store(ptr::null_mut(), Relaxed);
 
-            let actual = self
-                .head_readiness
-                .compare_and_swap(sleep_marker, end_marker, AcqRel);
+            let actual =
+                self.head_readiness
+                    .compare_and_swap(sleep_marker, end_marker, AcqRel);
 
             debug_assert!(actual != end_marker);
 
@@ -2463,7 +2478,9 @@ impl ReadinessQueueInner {
         let mut tail = *self.tail_readiness.get();
         let mut next = (*tail).next_readiness.load(Acquire);
 
-        if tail == self.end_marker() || tail == self.sleep_marker() || tail == self.closed_marker()
+        if tail == self.end_marker()
+            || tail == self.sleep_marker()
+            || tail == self.closed_marker()
         {
             if next.is_null() {
                 // Make sure the sleep marker is removed (as we are no longer

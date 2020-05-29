@@ -137,8 +137,13 @@ pub trait Evented {
     ///
     /// [`Poll::register`]: ../struct.Poll.html#method.register
     /// [`Registration`]: ../struct.Registration.html
-    fn register(&self, poll: &Poll, token: Token, interest: Ready, opts: PollOpt)
-        -> io::Result<()>;
+    fn register(
+        &self,
+        poll: &Poll,
+        token: Token,
+        interest: Ready,
+        opts: PollOpt,
+    ) -> io::Result<()>;
 
     /// Re-register `self` with the given `Poll` instance.
     ///

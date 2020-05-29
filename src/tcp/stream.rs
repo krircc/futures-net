@@ -457,11 +457,17 @@ impl AsyncWrite for TcpStream {
         Pin::new(&mut self.io).poll_write(cx, buf)
     }
 
-    fn poll_flush(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_flush(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<()>> {
         Pin::new(&mut self.io).poll_flush(cx)
     }
 
-    fn poll_close(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_close(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<()>> {
         Pin::new(&mut self.io).poll_close(cx)
     }
 }
@@ -520,7 +526,10 @@ impl fmt::Debug for TcpStream {
 impl Future for ConnectFuture {
     type Output = io::Result<TcpStream>;
 
-    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<TcpStream>> {
+    fn poll(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<TcpStream>> {
         match mem::replace(&mut self.inner, ConnectFutureState::Empty) {
             ConnectFutureState::Waiting(stream) => {
                 // Once we've connected, wait for the stream to be writable as
@@ -567,7 +576,7 @@ impl std::convert::TryFrom<&std::net::SocketAddr> for TcpStream {
 use std::os::unix::prelude::*;
 
 impl AsRawFd for TcpStream {
-        fn as_raw_fd(&self) -> RawFd {
-            self.io.get_ref().as_raw_fd()
-        }
+    fn as_raw_fd(&self) -> RawFd {
+        self.io.get_ref().as_raw_fd()
+    }
 }

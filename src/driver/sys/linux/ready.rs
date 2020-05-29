@@ -101,7 +101,7 @@ const LIO: usize = 0b00_0000;
 const PRI: usize = 0b100_0000;
 
 // Export to support `Ready::all`
-pub const READY_ALL: usize = ERROR | HUP  | LIO | PRI;
+pub const READY_ALL: usize = ERROR | HUP | LIO | PRI;
 
 #[test]
 fn test_ready_all() {
@@ -117,7 +117,6 @@ fn test_ready_all() {
 }
 
 impl UnixReady {
-
     /// Returns a `Ready` representing error readiness.
     ///
     /// **Note that only readable and writable readiness is guaranteed to be

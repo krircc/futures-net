@@ -65,7 +65,10 @@ impl AsyncReady for TcpListener {
     type Err = std::io::Error;
 
     /// Check if the stream can be read from.
-    fn poll_ready(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Result<Self::Ok, Self::Err>> {
+    fn poll_ready(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<Result<Self::Ok, Self::Err>> {
         let (io, addr) = ready!(self.poll_accept_std(cx)?);
         let io = sys::net::TcpStream::from_stream(io)?;
         let io = TcpStream::new(io);
@@ -79,7 +82,6 @@ impl fmt::Debug for TcpListener {
     }
 }
 
-
 /// Stream returned by the `TcpListener::incoming` function representing the
 /// stream of sockets received from a listener.
 #[must_use = "streams do nothing unless polled"]
@@ -91,7 +93,10 @@ pub struct Incoming<'a> {
 impl<'a> Stream for Incoming<'a> {
     type Item = io::Result<TcpStream>;
 
-    fn poll_next(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+    fn poll_next(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<Option<Self::Item>> {
         let (socket, _) = ready!(Pin::new(&mut *self.inner).poll_ready(cx)?);
         Poll::Ready(Some(Ok(socket)))
     }
@@ -100,7 +105,7 @@ impl<'a> Stream for Incoming<'a> {
 use std::os::unix::prelude::*;
 
 impl AsRawFd for TcpListener {
-        fn as_raw_fd(&self) -> RawFd {
-            self.io.get_ref().as_raw_fd()
-        }
+    fn as_raw_fd(&self) -> RawFd {
+        self.io.get_ref().as_raw_fd()
+    }
 }

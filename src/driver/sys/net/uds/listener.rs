@@ -101,7 +101,13 @@ impl UnixListener {
 }
 
 impl Evented for UnixListener {
-    fn register(&self, poll: &Poll, token: Token, events: Ready, opts: PollOpt) -> io::Result<()> {
+    fn register(
+        &self,
+        poll: &Poll,
+        token: Token,
+        events: Ready,
+        opts: PollOpt,
+    ) -> io::Result<()> {
         EventedFd(&self.as_raw_fd()).register(poll, token, events, opts)
     }
 

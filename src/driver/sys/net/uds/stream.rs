@@ -132,7 +132,8 @@ impl UnixStream {
         unsafe {
             let slice = unix::as_os_slice_mut(bufs);
             let len = cmp::min(<libc::c_int>::max_value() as usize, slice.len());
-            let rc = libc::readv(self.inner.as_raw_fd(), slice.as_ptr(), len as libc::c_int);
+            let rc =
+                libc::readv(self.inner.as_raw_fd(), slice.as_ptr(), len as libc::c_int);
             if rc < 0 {
                 Err(io::Error::last_os_error())
             } else {
@@ -157,7 +158,8 @@ impl UnixStream {
         unsafe {
             let slice = unix::as_os_slice(bufs);
             let len = cmp::min(<libc::c_int>::max_value() as usize, slice.len());
-            let rc = libc::writev(self.inner.as_raw_fd(), slice.as_ptr(), len as libc::c_int);
+            let rc =
+                libc::writev(self.inner.as_raw_fd(), slice.as_ptr(), len as libc::c_int);
             if rc < 0 {
                 Err(io::Error::last_os_error())
             } else {
@@ -168,7 +170,13 @@ impl UnixStream {
 }
 
 impl Evented for UnixStream {
-    fn register(&self, poll: &Poll, token: Token, events: Ready, opts: PollOpt) -> io::Result<()> {
+    fn register(
+        &self,
+        poll: &Poll,
+        token: Token,
+        events: Ready,
+        opts: PollOpt,
+    ) -> io::Result<()> {
         EventedFd(&self.as_raw_fd()).register(poll, token, events, opts)
     }
 

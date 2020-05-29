@@ -245,7 +245,10 @@ impl Registration {
     /// # Panics
     ///
     /// This function will panic if called from outside of a task context.
-    pub fn poll_read_ready(&self, cx: &mut Context<'_>) -> Poll<io::Result<sys::event::Ready>> {
+    pub fn poll_read_ready(
+        &self,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<sys::event::Ready>> {
         match self.poll_ready(Some(cx), Direction::Read) {
             Ok(Some(v)) => Poll::Ready(Ok(v)),
             Ok(None) => Poll::Pending,
@@ -295,7 +298,10 @@ impl Registration {
     /// # Panics
     ///
     /// This function will panic if called from outside of a task context.
-    pub fn poll_write_ready(&self, cx: &mut Context<'_>) -> Poll<io::Result<sys::event::Ready>> {
+    pub fn poll_write_ready(
+        &self,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<sys::event::Ready>> {
         match self.poll_ready(Some(cx), Direction::Write) {
             Ok(Some(v)) => Poll::Ready(Ok(v)),
             Ok(None) => Poll::Pending,
@@ -474,8 +480,10 @@ impl Inner {
         // If HUP were to be cleared when `direction` is `Read`, then when
         // `poll_ready` is called again with a _`direction` of `Write`, the HUP
         // state would not be visible.
-        let mut ready =
-            mask & sys::event::Ready::from_usize(sched.readiness.fetch_and(!mask_no_hup, SeqCst));
+        let mut ready = mask
+            & sys::event::Ready::from_usize(
+                sched.readiness.fetch_and(!mask_no_hup, SeqCst),
+            );
 
         if ready.is_empty() && cx.is_some() {
             let cx = cx.unwrap();
@@ -487,7 +495,9 @@ impl Inner {
 
             // Try again
             ready = mask
-                & sys::event::Ready::from_usize(sched.readiness.fetch_and(!mask_no_hup, SeqCst));
+                & sys::event::Ready::from_usize(
+                    sched.readiness.fetch_and(!mask_no_hup, SeqCst),
+                );
         }
 
         if ready.is_empty() {

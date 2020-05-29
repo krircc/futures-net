@@ -108,7 +108,10 @@ impl TcpStream {
     ///   loop. Note that on Windows you must `bind` a socket before it can be
     ///   connected, so if a custom `TcpBuilder` is used it should be bound
     ///   (perhaps to `INADDR_ANY`) before this method is called.
-    pub fn connect_stream(stream: net::TcpStream, addr: &SocketAddr) -> io::Result<TcpStream> {
+    pub fn connect_stream(
+        stream: net::TcpStream,
+        addr: &SocketAddr,
+    ) -> io::Result<TcpStream> {
         Ok(TcpStream {
             sys: linux::TcpStream::connect(stream, addr)?,
             selector_id: SelectorId::new(),

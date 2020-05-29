@@ -1,10 +1,10 @@
 //! futures reactor,  event loop.
 
-pub mod sys;
 pub(crate) mod background;
-pub(crate) mod registration;
 mod poll_evented;
+pub(crate) mod registration;
 mod sharded_rwlock;
+pub mod sys;
 
 pub use self::poll_evented::PollEvented;
 
@@ -23,7 +23,7 @@ use std::{fmt, usize};
 
 use self::background::Background;
 use self::sharded_rwlock::RwLock;
-use self::sys::{event::Evented};
+use self::sys::event::Evented;
 
 /// The futures reactor,  event loop.
 ///

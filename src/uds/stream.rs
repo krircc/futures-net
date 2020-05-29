@@ -184,11 +184,17 @@ impl AsyncWrite for UnixStream {
         Pin::new(&mut self.io).poll_write(cx, buf)
     }
 
-    fn poll_flush(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_flush(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<()>> {
         Pin::new(&mut self.io).poll_flush(cx)
     }
 
-    fn poll_close(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_close(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<()>> {
         Pin::new(&mut self.io).poll_close(cx)
     }
 }
@@ -258,7 +264,10 @@ impl AsRawFd for UnixStream {
 impl Future for ConnectFuture {
     type Output = io::Result<UnixStream>;
 
-    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<UnixStream>> {
+    fn poll(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<UnixStream>> {
         use std::mem;
 
         match self.inner {

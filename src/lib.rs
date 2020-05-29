@@ -44,12 +44,11 @@
 //! }
 //! ```
 
-
 #![warn(
     rust_2018_idioms,
     unreachable_pub,
     missing_debug_implementations,
-    missing_docs,
+    missing_docs
 )]
 #![allow(
     warnings,
@@ -67,9 +66,9 @@
 pub use futures_net_macro::{main, test};
 
 pub mod runtime;
-pub mod uds;
 pub mod tcp;
 pub mod udp;
+pub mod uds;
 
 pub mod driver;
 

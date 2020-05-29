@@ -176,7 +176,8 @@ where
         let mask = sys::event::Ready::readable() | platform::hup();
 
         // See if the current readiness matches any bits.
-        let mut ret = sys::event::Ready::from_usize(cached) & sys::event::Ready::readable();
+        let mut ret =
+            sys::event::Ready::from_usize(cached) & sys::event::Ready::readable();
 
         if ret.is_empty() {
             // Readiness does not match, consume the registration's readiness
@@ -215,7 +216,10 @@ where
     ///
     /// The `mask` argument specifies the readiness bits to clear. This may not
     /// include `writable` or `hup`.
-    pub fn clear_read_ready(self: Pin<&mut Self>, cx: &mut Context<'_>) -> io::Result<()> {
+    pub fn clear_read_ready(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> io::Result<()> {
         self.inner
             .read_readiness
             .fetch_and(!sys::event::Ready::readable().as_usize(), Relaxed);
@@ -258,7 +262,8 @@ where
         let mask = sys::event::Ready::writable() | platform::hup();
 
         // See if the current readiness matches any bits.
-        let mut ret = sys::event::Ready::from_usize(cached) & sys::event::Ready::writable();
+        let mut ret =
+            sys::event::Ready::from_usize(cached) & sys::event::Ready::writable();
 
         if ret.is_empty() {
             // Readiness does not match, consume the registration's readiness
@@ -301,7 +306,10 @@ where
     /// # Panics
     ///
     /// This function will panic if called from outside of a task context.
-    pub fn clear_write_ready(self: Pin<&mut Self>, cx: &mut Context<'_>) -> io::Result<()> {
+    pub fn clear_write_ready(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> io::Result<()> {
         self.inner
             .write_readiness
             .fetch_and(!sys::event::Ready::writable().as_usize(), Relaxed);
@@ -368,7 +376,10 @@ where
         }
     }
 
-    fn poll_flush(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_flush(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+    ) -> Poll<io::Result<()>> {
         ready!(self.poll_write_ready(cx)?);
 
         let r = PollEvented::get_mut(&mut *self).flush();

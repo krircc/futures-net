@@ -88,19 +88,35 @@ impl UdpSocket {
         self.io.set_ttl(ttl)
     }
 
-    pub fn join_multicast_v4(&self, multiaddr: &Ipv4Addr, interface: &Ipv4Addr) -> io::Result<()> {
+    pub fn join_multicast_v4(
+        &self,
+        multiaddr: &Ipv4Addr,
+        interface: &Ipv4Addr,
+    ) -> io::Result<()> {
         self.io.join_multicast_v4(multiaddr, interface)
     }
 
-    pub fn join_multicast_v6(&self, multiaddr: &Ipv6Addr, interface: u32) -> io::Result<()> {
+    pub fn join_multicast_v6(
+        &self,
+        multiaddr: &Ipv6Addr,
+        interface: u32,
+    ) -> io::Result<()> {
         self.io.join_multicast_v6(multiaddr, interface)
     }
 
-    pub fn leave_multicast_v4(&self, multiaddr: &Ipv4Addr, interface: &Ipv4Addr) -> io::Result<()> {
+    pub fn leave_multicast_v4(
+        &self,
+        multiaddr: &Ipv4Addr,
+        interface: &Ipv4Addr,
+    ) -> io::Result<()> {
         self.io.leave_multicast_v4(multiaddr, interface)
     }
 
-    pub fn leave_multicast_v6(&self, multiaddr: &Ipv6Addr, interface: u32) -> io::Result<()> {
+    pub fn leave_multicast_v6(
+        &self,
+        multiaddr: &Ipv6Addr,
+        interface: u32,
+    ) -> io::Result<()> {
         self.io.leave_multicast_v6(multiaddr, interface)
     }
 

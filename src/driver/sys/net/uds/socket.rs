@@ -90,7 +90,9 @@ impl Drop for Socket {
     }
 }
 
-pub unsafe fn sockaddr_un(path: &Path) -> io::Result<(libc::sockaddr_un, libc::socklen_t)> {
+pub unsafe fn sockaddr_un(
+    path: &Path,
+) -> io::Result<(libc::sockaddr_un, libc::socklen_t)> {
     let mut addr: libc::sockaddr_un = mem::zeroed();
     addr.sun_family = libc::AF_UNIX as libc::sa_family_t;
 
