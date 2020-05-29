@@ -60,7 +60,8 @@
     clippy::too_many_arguments,
     clippy::new_without_default
 )]
-#[deny(clippy::drop_copy)]
+#![deny(clippy::drop_copy)]
+
 #[cfg(feature = "macro")]
 #[doc(inline)]
 pub use futures_net_macro::{main, test};
